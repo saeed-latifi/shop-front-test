@@ -1,11 +1,15 @@
+"use client";
 import { IProduct } from "@/hooks/useProduct";
 import Link from "next/link";
 import { IconEdit } from "../icons/IconEdit";
 import { IconAddToCart } from "../icons/IconAddToCart";
 import { useCart } from "@/hooks/useCart";
+import { IconCart } from "../icons/IconCart";
+import { useRouter } from "next/navigation";
 
 export function CardProduct({ product, isDashboard }: { product: IProduct; isDashboard?: boolean }) {
-	const { onAdd } = useCart();
+	const { onAdd, isExist } = useCart();
+	const router = useRouter();
 
 	return (
 		<Link href={isDashboard ? `/dashboard/products/${product.id}` : `/products/${product.id}`} className="flex flex-col w-full border border-border rounded-lg overflow-hidden">
@@ -21,11 +25,11 @@ export function CardProduct({ product, isDashboard }: { product: IProduct; isDas
 						onClick={(e) => {
 							e.preventDefault();
 							e.stopPropagation();
-							onAdd(product);
+							isExist(product.id) ? router.push("/cart") : onAdd(product);
 						}}
 						className="absolute right-1 top-1 flex items-center justify-center border border-action bg-white/70 p-1 rounded-full"
 					>
-						<IconAddToCart className=" w-6 h-6 min-w-6 fill-action" />
+						{isExist(product.id) ? <IconCart className=" w-6 h-6 min-w-6 fill-action" /> : <IconAddToCart className=" w-6 h-6 min-w-6 fill-action" />}
 					</button>
 				)}
 				<p className="absolute left-1 bottom-1 text-xs sm:text-sm  w-fit bg-gray-500/70 text-action p-1 rounded-lg">{product.price} $</p>

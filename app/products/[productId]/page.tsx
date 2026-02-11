@@ -1,12 +1,14 @@
 "use client";
 
 import { LoadingSpinner } from "@/components/animations/LoadingSpinner";
+import { ButtonAccent } from "@/components/ButtonAccent";
 import { CardCenter } from "@/components/card/CardCenter";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { WidthFixer } from "@/components/layout/WidthFixer";
+import { useCart } from "@/hooks/useCart";
 import { useProductRecord } from "@/hooks/useProduct";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function ProductInfo() {
 	return (
@@ -22,9 +24,13 @@ export default function ProductInfo() {
 
 function Content() {
 	const params = useParams();
+	const router = useRouter();
+
 	const productId = parseInt(params.productId as string, 10);
 
 	const { data: product, isLoading } = useProductRecord(productId);
+
+	const { onAdd, isExist } = useCart();
 
 	if (isLoading)
 		return (
@@ -53,6 +59,8 @@ function Content() {
 				</p>
 				<p className="w-full">{product.description}</p>
 			</div>
+
+			{isExist(product.id) ? <ButtonAccent onClick={() => router.push("/cart")}>go to cart</ButtonAccent> : <ButtonAccent onClick={() => onAdd(product)}>add to cart</ButtonAccent>}
 		</div>
 	);
 }

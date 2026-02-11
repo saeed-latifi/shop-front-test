@@ -68,5 +68,9 @@ export function useCart() {
 		);
 	}
 
-	return { data, isLoading, onAdd, onChangeCount, onRemove, clearCart, getTotalItems, increment, decrement, getTotalPrice };
+	function isExist(id: number) {
+		return data?.some((i) => i.id === id) ?? false;
+	}
+
+	return { data, isLoading, onAdd, onChangeCount, onRemove, clearCart, getTotalItems, increment, decrement, getTotalPrice, isExist };
 }

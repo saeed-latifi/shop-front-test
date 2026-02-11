@@ -1,26 +1,100 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+	/* color */
+	--color-primary: #021736;
+	--color-accent: #0c68f4;
+	--color-action: #f45e0c;
+	--color-badge: #10de39;
+	--color-border: #d5d5d5;
+	--color-error: #f5275e;
+	--color-background: #f6f6f6;
+	--color-white: #fff;
+	--color-text: #5b5b5b;
+
+	/* shadow */
+	--shadow-center: 1px 2px 5px 0px rgba(0, 0, 0, 0.5);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+	direction: inherit;
+	cursor: inherit;
+	object-fit: contain;
+	box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*:disabled {
+	opacity: 0.7;
+	cursor: not-allowed;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	fill: var(--color-primary);
+	color: var(--color-primary);
+
+	/*  */
+	width: 100%;
+	height: max-content;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	overflow-x: hidden;
+	align-items: center;
+	font-family: sans-serif;
+}
+
+.ltr {
+	direction: ltr;
+}
+
+.rtl {
+	direction: rtl;
+}
+
+label,
+a,
+button,
+.clicker {
+	@apply hover:opacity-90 active:opacity-70 cursor-pointer select-none;
+}
+
+video:fullscreen {
+	border: none !important;
+	border-radius: 0 !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	background-color: transparent !important;
+	-webkit-box-shadow: 0 0 0 30px white inset !important; /* Optional: Set inner shadow to match background */
+}
+
+textarea,
+input {
+	border: none;
+	outline: none !important; /* Removes the default outline */
+}
+
+/*  remove scrollbar */
+*::-webkit-scrollbar {
+	display: none;
+}
+
+* {
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+}
+
+/* Show scrollbar class */
+.showScroll::-webkit-scrollbar {
+	display: block;
+	width: 12px;
+	height: 12px;
+}
+
+.showScroll {
+	-ms-overflow-style: auto; /* IE and Edge */
+	scrollbar-width: thin; /* Firefox */
 }
